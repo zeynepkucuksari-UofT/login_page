@@ -1,21 +1,96 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<title> CareCanvas Login Page </title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class = "center">
-<h1> Welcome</h1>
-<form method="post">
-<div class="txt_field">
-<input type="text" required>
-<span> </span>
-<label>Email Address </label>
-</div>
-<input type="submit" value="Login">
-</form>
-</div>
+    <div class="login-container" id="loginContainer">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="email">Registered Email:</label>
+            <input type="email" id="email" name="email" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div class="otp-container" id="otpContainer" style="display:none;">
+        <h2>Enter OTP</h2>
+        <form id="otpForm">
+            <label for="otp">OTP:</label>
+            <input type="text" id="otp" name="otp" required>
+            <button type="submit">Verify</button>
+        </form>
+        <p id="timer">Time remaining: 02:00</p>
+    </div>
+
+    <script>
+        let countdown;
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            
+            // Simulate sending OTP
+            const sendOtpResponse = await fetch('https://op9uvuxmy1.execute-api.us-east-2.amazonaws.com/dev/send_otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email_address: email })
+            });
+            
+            if (sendOtpResponse.ok) {
+                // Hide the login form and show the OTP form
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('otpContainer').style.display = 'block';
+
+                // Start the 2-minute countdown
+                startCountdown(2);
+            } else {
+                alert('Error sending OTP');
+            }
+        });
+
+        document.getElementById('otpForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const otp = document.getElementById('otp').value;
+            const email = document.getElementById('email').value;
+            
+            // Simulate verifying OTP
+            const verifyOtpResponse = await fetch('https://op9uvuxmy1.execute-api.us-east-2.amazonaws.com/dev/verify_otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ otp: otp, email_address: email })
+            });
+            
+            if (verifyOtpResponse.ok) {
+                alert('OTP Verified Successfully!');
+                // Redirect or perform other actions after successful verification
+            } else {
+                alert('Invalid OTP. Please try again.');
+            }
+        });
+
+        function startCountdown(minutes) {
+            let time = minutes * 60;
+            const timerElement = document.getElementById('timer');
+            
+            countdown = setInterval(() => {
+                const minutes = Math.floor(time / 60);
+                const seconds = time % 60;
+                timerElement.textContent = `Time remaining: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                time--;
+
+                if (time < 0) {
+                    clearInterval(countdown);
+                    alert('OTP expired! Please try again.');
+                    location.reload();  // Reload the page for a fresh start
+                }
+            }, 1000);
+        }
+    </script>
 </body>
 </html>
+
+
