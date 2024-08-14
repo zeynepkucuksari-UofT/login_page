@@ -27,28 +27,31 @@
     </div>
 
     <script>
-        let countdown;
+        const apiBaseUrl = 'https://op9uvuxmy1.execute-api.us-east-2.amazonaws.com/dev';
 
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const email = document.getElementById('email').value;
             
-            // Simulate sending OTP
-            const sendOtpResponse = await fetch('https://op9uvuxmy1.execute-api.us-east-2.amazonaws.com/dev/send_otp', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email_address: email })
-            });
-            
-            if (sendOtpResponse.ok) {
-                // Hide the login form and show the OTP form
-                document.getElementById('loginContainer').style.display = 'none';
-                document.getElementById('otpContainer').style.display = 'block';
+            try {
+                // Send OTP request
+                const sendOtpResponse = await fetch(`${apiBaseUrl}/send_otp?email_address=${encodeURIComponent(email)}`, {
+                    method: 'GET'
+                });
 
-                // Start the 2-minute countdown
-                startCountdown(2);
-            } else {
-                alert('Error sending OTP');
+                if (sendOtpResponse.ok) {
+                    // Hide the login form and show the OTP form
+                    document.getElementById('loginContainer').style.display = 'none';
+                    document.getElementById('otpContainer').style.display = 'block';
+
+                    // Start the 2-minute countdown
+                    startCountdown(2);
+                } else {
+                    alert('Error sending OTP');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to send OTP');
             }
         });
 
@@ -56,19 +59,22 @@
             e.preventDefault();
             const otp = document.getElementById('otp').value;
             const email = document.getElementById('email').value;
-            
-            // Simulate verifying OTP
-            const verifyOtpResponse = await fetch('https://op9uvuxmy1.execute-api.us-east-2.amazonaws.com/dev/verify_otp', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ otp: otp, email_address: email })
-            });
-            
-            if (verifyOtpResponse.ok) {
-                alert('OTP Verified Successfully!');
-                // Redirect or perform other actions after successful verification
-            } else {
-                alert('Invalid OTP. Please try again.');
+
+            try {
+                // Verify OTP request
+                const verifyOtpResponse = await fetch(`${apiBaseUrl}/verify_otp?otp=${encodeURIComponent(otp)}&email_address=${encodeURIComponent(email)}`, {
+                    method: 'GET'
+                });
+
+                if (verifyOtpResponse.ok) {
+                    alert('OTP Verified Successfully!');
+                    // Redirect or perform other actions after successful verification
+                } else {
+                    alert('Invalid OTP. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to verify OTP');
             }
         });
 
@@ -92,5 +98,3 @@
     </script>
 </body>
 </html>
-
-
