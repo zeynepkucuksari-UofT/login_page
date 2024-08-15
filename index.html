@@ -32,26 +32,28 @@
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const email = document.getElementById('email').value;
-            
+
             try {
                 // Send OTP request
                 const sendOtpResponse = await fetch(`${apiBaseUrl}/send_otp?email_address=${encodeURIComponent(email)}`, {
                     method: 'GET'
                 });
 
-                if (sendOtpResponse.ok) {
-                    // Hide the login form and show the OTP form
+                const responseText = await sendOtpResponse.text();
+
+                if (sendOtpResponse.ok && responseText.includes("A verification code is sent")) {
+                    // OTP sent successfully, proceed to OTP entry
                     document.getElementById('loginContainer').style.display = 'none';
                     document.getElementById('otpContainer').style.display = 'block';
 
                     // Start the 2-minute countdown
                     startCountdown(2);
                 } else {
-                    alert('Error sending OTP');
+                    alert('Failed to send OTP: ' + responseText);
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('Failed to send OTP'+str(error);
+                alert('Failed to send OTP: ' + error.message);
             }
         });
 
@@ -66,15 +68,17 @@
                     method: 'GET'
                 });
 
-                if (verifyOtpResponse.ok) {
+                const responseText = await verifyOtpResponse.text();
+
+                if (verifyOtpResponse.ok && responseText.includes("Verified")) {
                     alert('OTP Verified Successfully!');
                     // Redirect or perform other actions after successful verification
                 } else {
-                    alert('Invalid OTP. Please try again.');
+                    alert('Failed to verify OTP: ' + responseText);
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('Failed to verify OTP');
+                alert('Failed to verify OTP: ' + error.message);
             }
         });
 
