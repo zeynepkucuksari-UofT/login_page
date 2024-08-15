@@ -38,8 +38,9 @@
             const sendOtpResponse = await fetch(`${apiBaseUrl}/send_otp?email_address=${encodeURIComponent(email)}`, {
                 method: 'GET'
             });
+            
 
-            if (sendOtpResponse.ok) {
+            if (document.getElementById('button').clicked == true) {
                 // Hide the login form and show the OTP form
                 document.getElementById('loginContainer').style.display = 'none';
                 document.getElementById('otpContainer').style.display = 'block';
