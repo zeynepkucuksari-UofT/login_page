@@ -7,24 +7,21 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="login-container" id="loginContainer">
-        <h2>Login</h2>
-        <form id="loginForm">
+    <form action="" method="post">
+        <div class="login-container" id="loginContainer">
+            <h2>Login</h2>
             <label for="email">Registered Email:</label>
             <input type="email" id="email" name="email" required>
-            <button type="submit">Submit</button>
-        </form>
-    </div>
-
-    <div class="otp-container" id="otpContainer" style="display:none;">
-        <h2>Enter OTP</h2>
-        <form id="otpForm">
+            <button type="submit" id="btnsubmit" onclick="F1()">Submit</button>
+        </div>
+        <div class="otp-container" id="otpContainer" style="display:none;">
+            <h2>Enter OTP</h2>
             <label for="otp">OTP:</label>
             <input type="text" id="otp" name="otp" required>
-            <button type="submit">Verify</button>
-        </form>
-        <p id="timer">Time remaining: 02:00</p>
-    </div>
+            <button type="submit" id="btnfinal">Verify</button>
+            <p id="timer">Time remaining: 02:00</p>
+        </div>
+    </form>
 
     <script>
         const apiBaseUrl = 'https://op9uvuxmy1.execute-api.us-east-2.amazonaws.com/dev';
@@ -38,20 +35,14 @@
             const sendOtpResponse = await fetch(`${apiBaseUrl}/send_otp?email_address=${encodeURIComponent(email)}`, {
                 method: 'GET'
             });
-            
-
-            if (document.getElementById('button').clicked == true) {
-                // Hide the login form and show the OTP form
+            function F1() {
                 document.getElementById('loginContainer').style.display = 'none';
                 document.getElementById('otpContainer').style.display = 'block';
 
                 // Start the 2-minute countdown
                 startCountdown(2);
-            } else {
-                alert('Error sending OTP');
-            }
-            
-        });
+            };
+                
 
         document.getElementById('otpForm').addEventListener('submit', async function(e) {
             e.preventDefault();
