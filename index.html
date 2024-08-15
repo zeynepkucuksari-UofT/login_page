@@ -58,29 +58,30 @@
         });
 
         document.getElementById('otpForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const otp = document.getElementById('otp').value;
-            const email = document.getElementById('email').value;
-
-            try {
-                // Verify OTP request
-                const verifyOtpResponse = await fetch(`${apiBaseUrl}/verify_otp?otp=${encodeURIComponent(otp)}&email_address=${encodeURIComponent(email)}`, {
-                    method: 'GET'
-                });
-
-                const responseText = await verifyOtpResponse.text();
-
-                if (verifyOtpResponse.ok && responseText.includes("Verified")) {
-                    alert('OTP Verified Successfully!');
-                    // Redirect or perform other actions after successful verification
-                } else {
-                    alert('Failed to verify OTP: ' + responseText);
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Failed to verify OTP: ' + error.message);
+        e.preventDefault();
+        const otp = document.getElementById('otp').value;
+        const email = document.getElementById('email').value;
+    
+        try {
+            // Verify OTP request
+            const verifyOtpResponse = await fetch(`${apiBaseUrl}/verify_otp?otp=${encodeURIComponent(otp)}&email_address=${encodeURIComponent(email)}`, {
+                method: 'GET'
+            });
+    
+            const response = await verifyOtpResponse.json();
+    
+            if (verifyOtpResponse.ok && response.message === 'Verified') {
+                alert('OTP Verified Successfully!');
+                window.location.href = response.dashboard_link;  // Redirect to dashboard
+            } else {
+                alert('Failed to verify OTP: ' + response.message);
             }
-        });
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to verify OTP: ' + error.message);
+        }
+    });
+
 
         function startCountdown(minutes) {
             let time = minutes * 60;
