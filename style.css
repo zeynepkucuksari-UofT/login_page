@@ -28,6 +28,23 @@ h2 {
     color: #333;
 }
 
+/* Description styling */
+.description {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.description a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.description a:hover {
+    text-decoration: underline;
+}
+
 /* Label styling */
 label {
     display: block;
