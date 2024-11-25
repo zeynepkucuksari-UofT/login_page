@@ -40,6 +40,7 @@
                 });
 
                 const responseText = await sendOtpResponse.text();
+                console.log('Send OTP Response:', responseText);
 
                 if (sendOtpResponse.ok && responseText.includes("A verification code is sent")) {
                     // OTP sent successfully, proceed to OTP entry
