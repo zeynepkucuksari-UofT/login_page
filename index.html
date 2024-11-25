@@ -83,7 +83,7 @@
     
             if (verifyOtpResponse.ok && response.message === 'Verified') {
                 //alert('OTP Verified Successfully!');
-                window.location.assign(response.dashboard_link);  // Redirect to dashboard
+                window.location.replace(response.dashboard_link);  // Redirect to dashboard
             } else {
                 alert('Failed to verify OTP: ' + response.message);
             }
