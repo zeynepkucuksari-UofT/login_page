@@ -25,8 +25,14 @@
 
     <div class="otp-container" id="otpContainer" style="display:none;">
         <h2>Enter One Time Password</h2>
+         <!-- OTP Description -->
+        <p class="description">
+            Please check your email inbox for a one-time password to complete your login. 
+            The email should come from <strong>noreply@carecanvas.ca</strong>. 
+            If you don't see it, be sure to check your spam or junk folder.
+        </p>
         <form id="otpForm">
-            <label for="otp">OTP:</label>
+            <label for="otp">One Time Password:</label>
             <input type="text" id="otp" name="otp" required>
             <button type="submit">Verify</button>
         </form>
