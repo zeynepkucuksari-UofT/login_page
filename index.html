@@ -82,8 +82,8 @@
             const response = await verifyOtpResponse.json();
     
             if (verifyOtpResponse.ok && response.message === 'Verified') {
-                alert('OTP Verified Successfully!');
-                window.location.href= response.dashboard_link;  // Redirect to dashboard
+                //alert('OTP Verified Successfully!');
+                window.location.replace(response.dashboard_link);  // Redirect to dashboard
             } else {
                 alert('Failed to verify OTP: ' + response.message);
             }
