@@ -15,8 +15,7 @@ body {
     background: url(https://s3.ca-central-1.amazonaws.com/www.carecanvas.net/physician/i/gfx/sprite.svg) no-repeat 0 0;
     margin-bottom: 20px; /* Adds spacing below the logo */
     display: block;
-    margin-left: auto; /* Center the logo horizontally */
-    margin-right: auto; /* Center the logo horizontally */
+    margin: 0 auto; /* Ensures the logo is centered horizontally */
 }
 
 /* Container styling for login and OTP forms */
@@ -29,6 +28,10 @@ body {
     max-width: 350px;
     text-align: center;
     transition: all 0.3s ease;
+    box-sizing: border-box; /* Makes sure padding does not affect the width */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the content inside the container */
 }
 
 h2 {
