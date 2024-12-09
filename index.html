@@ -39,7 +39,7 @@
             <input type="text" id="otp" name="otp" required>
             <button type="submit">Verify</button>
         </form>
-        <p id="timer">Time remaining: 02:00</p>
+        <p id="timer">Time remaining: 05:00</p>
     </div>
     <div class="footer">
         <img src="https://dfcm.utoronto.ca/sites/default/files/DFCMLogoNavy.png" alt="DFCM Logo" class="footer-logo">
@@ -68,8 +68,8 @@
                 document.getElementById('loginContainer').style.display = 'none';
                 document.getElementById('otpContainer').style.display = 'block';
     
-                // Start the 2-minute countdown
-                startCountdown(2);
+                // Start the 5-minute countdown
+                startCountdown(5);
             } else {
                 alert('Failed to send OTP: ' + responseText);
             }
