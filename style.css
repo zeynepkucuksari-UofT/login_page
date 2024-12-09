@@ -138,7 +138,11 @@ button.loading:after {
     color: #ff0000;
     font-size: 14px;
 }
-
+/* Logo container styling */
+.logo-container {
+    display: flex;
+    justify-content: center; /* Centers logo horizontally */
+    margin-bottom: 20px; /* Adds space between
 /* Responsive design for mobile */
 @media (max-width: 480px) {
     .login-container, .otp-container {
