@@ -15,8 +15,8 @@ body {
     background: url(https://s3.ca-central-1.amazonaws.com/www.carecanvas.net/physician/i/gfx/sprite.svg) no-repeat 0 0;
     margin-bottom: 20px; /* Adds spacing below the logo */
     display: block;
-    margin-left: 80px; /* Center the logo horizontally */
-    margin-right: 80px; /* Center the logo horizontally */
+    margin-left: 100px; /* Center the logo horizontally */
+    margin-right: 60px; /* Center the logo horizontally */
 }
 
 /* Container styling for login and OTP forms */
