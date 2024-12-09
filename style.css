@@ -8,12 +8,15 @@ body {
     height: 100vh;
     margin: 0;
 }
+/* Logo styling inside the login container */
 .caredata-view {
     width: 170px; /* Adjusted width */
     height: 36px; /* Adjusted height */
     background: url(https://s3.ca-central-1.amazonaws.com/www.carecanvas.net/physician/i/gfx/sprite.svg) no-repeat 0 0;
     margin-bottom: 20px; /* Adds spacing below the logo */
     display: block;
+    margin-left: auto; /* Center the logo horizontally */
+    margin-right: auto; /* Center the logo horizontally */
 }
 
 /* Container styling for login and OTP forms */
