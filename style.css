@@ -44,7 +44,17 @@ h2 {
 .description a:hover {
     text-decoration: underline;
 }
+.footer {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+}
 
+.footer-logo {
+    width: 100px; /* Adjust size */
+    height: auto;
+}
 /* Label styling */
 label {
     display: block;
