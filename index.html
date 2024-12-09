@@ -8,10 +8,6 @@
 </head>
 <body>
     <div class="login-container" id="loginContainer">
-        <!-- CareCanvas Logo at the top -->
-        <div class="logo-container">
-            <img src="https://s3.ca-central-1.amazonaws.com/www.carecanvas.net/physician/i/gfx/sprite.svg" alt="CareCanvas Logo" class="carecanvas-logo">
-        </div>
         <h2>CareCanvas Login</h2>
         
         <!-- Description Section -->
@@ -43,85 +39,82 @@
         <p id="timer">Time remaining: 02:00</p>
     </div>
 
-    <!-- DFCM Logo as Footer -->
-    <div class="footer">
-        <img src="https://dfcm.utoronto.ca/sites/default/files/DFCMLogoNavy.png" alt="DFCM Logo" class="dfcm-logo">
-    </div>
-
     <script>
         const apiBaseUrl = 'https://1ejo3h9c96.execute-api.us-east-2.amazonaws.com/dev';
 
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const submitButton = e.target.querySelector('button'); // Get the submit button
-
-            // Add loading state to button
-            submitButton.classList.add('loading');
-
-            try {
-                // Send OTP request
-                const sendOtpResponse = await fetch(`${apiBaseUrl}/send_otp?email_address=${encodeURIComponent(email)}`, {
-                    method: 'GET'
-                });
-
-                const responseText = await sendOtpResponse.text();
-
-                if (sendOtpResponse.ok && responseText.includes("A verification code is sent")) {
-                    // OTP sent successfully, proceed to OTP entry
-                    document.getElementById('loginContainer').style.display = 'none';
-                    document.getElementById('otpContainer').style.display = 'block';
-
-                    // Start the 2-minute countdown
-                    startCountdown(2);
-                } else {
-                    alert('Failed to send OTP: ' + responseText);
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Failed to send OTP: ' + error.message);
-            } finally {
-                // Remove loading state after request completes
-                submitButton.classList.remove('loading');
+      document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const submitButton = e.target.querySelector('button'); // Get the submit button
+    
+        // Add loading state to button
+        submitButton.classList.add('loading');
+    
+        try {
+            // Send OTP request
+            const sendOtpResponse = await fetch(`${apiBaseUrl}/send_otp?email_address=${encodeURIComponent(email)}`, {
+                method: 'GET'
+            });
+    
+            const responseText = await sendOtpResponse.text();
+    
+            if (sendOtpResponse.ok && responseText.includes("A verification code is sent")) {
+                // OTP sent successfully, proceed to OTP entry
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('otpContainer').style.display = 'block';
+    
+                // Start the 2-minute countdown
+                startCountdown(2);
+            } else {
+                alert('Failed to send OTP: ' + responseText);
             }
-        });
-
-        document.getElementById('otpForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const otp = document.getElementById('otp').value;
-            const email = document.getElementById('email').value;
-            const verifyButton = e.target.querySelector('button'); // Get the verify button
-
-            // Add loading state to button
-            verifyButton.classList.add('loading');
-
-            try {
-                // Verify OTP request
-                const verifyOtpResponse = await fetch(`${apiBaseUrl}/verify_otp?otp=${encodeURIComponent(otp)}&email_address=${encodeURIComponent(email)}`, {
-                    method: 'GET'
-                });
-
-                const response = await verifyOtpResponse.json();
-
-                if (verifyOtpResponse.ok && response.message === 'Verified') {
-                    //alert('OTP Verified Successfully!');
-                    window.location.replace(response.dashboard_link);  // Redirect to dashboard
-                } else {
-                    alert('Failed to verify OTP: ' + response.message);
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Failed to verify OTP: ' + error.message);
-            } finally {
-                // Remove loading state after request completes
-                verifyButton.classList.remove('loading');
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to send OTP: ' + error.message);
+        } finally {
+            // Remove loading state after request completes
+            submitButton.classList.remove('loading');
+        }
+    });
+    
+    document.getElementById('otpForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const otp = document.getElementById('otp').value;
+        const email = document.getElementById('email').value;
+        const verifyButton = e.target.querySelector('button'); // Get the verify button
+    
+        // Add loading state to button
+        verifyButton.classList.add('loading');
+    
+        try {
+            // Verify OTP request
+            const verifyOtpResponse = await fetch(`${apiBaseUrl}/verify_otp?otp=${encodeURIComponent(otp)}&email_address=${encodeURIComponent(email)}`, {
+                method: 'GET'
+            });
+    
+            const response = await verifyOtpResponse.json();
+    
+            if (verifyOtpResponse.ok && response.message === 'Verified') {
+                //alert('OTP Verified Successfully!');
+                window.location.replace(response.dashboard_link);  // Redirect to dashboard
+            } else {
+                alert('Failed to verify OTP: ' + response.message);
             }
-        });
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to verify OTP: ' + error.message);
+        } finally {
+            // Remove loading state after request completes
+            verifyButton.classList.remove('loading');
+        }
+    });
+
+
 
         function startCountdown(minutes) {
             let time = minutes * 60;
             const timerElement = document.getElementById('timer');
-
+            
             countdown = setInterval(() => {
                 const minutes = Math.floor(time / 60);
                 const seconds = time % 60;
