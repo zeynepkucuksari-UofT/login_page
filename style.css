@@ -7,7 +7,6 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    flex-direction: column;
 }
 
 /* Container styling for login and OTP forms */
@@ -118,4 +117,30 @@ button.loading:after {
 
 /* Spinner animation */
 @keyframes spin {
-    0% { transform
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Timer text styling */
+#timer {
+    margin-top: 10px;
+    color: #ff0000;
+    font-size: 14px;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 480px) {
+    .login-container, .otp-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    input[type="email"], input[type="text"], button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
