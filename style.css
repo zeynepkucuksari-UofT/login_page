@@ -138,11 +138,14 @@ button.loading:after {
     color: #ff0000;
     font-size: 14px;
 }
-/* Logo container styling */
-.logo-container {
-    display: flex;
-    justify-content: center; /* Centers logo horizontally */
-    margin-bottom: 20px; /* Adds space between
+.caredata-view {
+    width: 170px; /* Adjusted width */
+    height: 36px; /* Adjusted height */
+    position: fixed;
+    top: 24px; /* Position the logo at the top */
+    left: 24px; /* Align it to the left */
+    background: url(https://s3.ca-central-1.amazonaws.com/www.carecanvas.net/physician/i/gfx/sprite.svg) no-repeat 0 0;
+}
 /* Responsive design for mobile */
 @media (max-width: 480px) {
     .login-container, .otp-container {
